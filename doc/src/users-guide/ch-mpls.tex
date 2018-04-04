@@ -1,33 +1,58 @@
-\ifdraft
-
 \chapter{The MPLS Models}
 \label{cha:mpls}
 
+% HINT: A good MPLS primer (a 64-slide presentation):
+% "MPLS for Dummies", Richard A Steenbergen <ras@nlayer.net>, nLayer Communications, Inc.
+% https://www.nanog.org/meetings/nanog49/presentations/Sunday/mpls-nanog49.pdf
+
+TODO rename Rsvp to RsvpTe
+TODO rename LdpRouter to LdpMplsRouter (or LdpLsr?), and RsvpRouter to RsvpMplsRouter
 
 \section{Overview}
 
-TODO
+TODO what is MPLS
 
+INET provides the following components for building MPLS simulations.
 
-\section{MPLS/RSVP/LDP Model - Implemented Standards}
-
-The implementation follows those RFCs below:
+The core modules are:
 
 \begin{itemize}
-  \item RFC 2702: Requirements for Traffic Engineering Over MPLS
-  \item RFC 2205: Resource ReSerVation Protocol
-  \item RFC 3031: Multiprotocol Label Switching Architecture
-  \item RFC 3036: LDP Specification
-  \item RFC 3209: RSVP-TE Extension to RSVP for LSP tunnels
-  \item RFC 2205: RSVP Version 1 - Functional Specification
-  \item RFC 2209: RSVP Message processing Version 1
+  \item \nedtype{Mpls}, 
+  \item \nedtype{LibTable}, 
+  \item \nedtype{Ldp}, 
+  \item \nedtype{Rsvp}, 
+  \item \nedtype{Ted}, 
+  \item \nedtype{LinkStateRouting} 
 \end{itemize}
 
+MPLS-enabled routers are:
+
+\begin{itemize}
+  \item \nedtype{LdpRouter} is an MPLS router with LDP as control protocol
+  \item \nedtype{RsvpRouter} is an MPLS router with RSVP-TE as control protocol 
+\end{itemize}
+
+
 \section{The MPLS Module}
+
+% collaborations with other modules, like LibTable.  libTableModule parameter
+
+LibTable stores the LIB (Label Information Base), accessed by ~Mpls and its
+associated control protocols (~Rsvp, ~Ldp) via direct C++ method calls.
+
+xml config
 
 TODO
 
 \section{The LDP Module}
+
+% collaborations with other modules
+
+TODO
+
+\section{The RSVP Module}
+
+% collaborations with other modules
 
 TODO
 
@@ -141,7 +166,27 @@ hop types are 0. The route defined is 10.0.0.1 -> 1.0.0.1 ->
 </traffic>
 \end{verbatim}
 
-\fi
+\section{MPLS-enabled Router Models}
+
+MPLS-enabled routers are \nedtype{LdpRouter}, \nedtype{RsvpRouter} 
+
+TODO 
+
+\section{Example Network}
+
+TODO
+
+\section{Related Standards}
+
+\begin{itemize}
+  \item RFC 2702: Requirements for Traffic Engineering Over MPLS
+  \item RFC 3031: Multiprotocol Label Switching Architecture
+  \item RFC 3036: LDP Specification
+  \item RFC 2205: Resource ReSerVation Protocol
+  \item RFC 3209: RSVP-TE Extension to RSVP for LSP tunnels
+  \item RFC 2205: RSVP Version 1 - Functional Specification
+  \item RFC 2209: RSVP Message processing Version 1
+\end{itemize}
 
 %%% Local Variables:
 %%% mode: latex
