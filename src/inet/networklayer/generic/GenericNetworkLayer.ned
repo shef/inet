@@ -47,7 +47,7 @@ module GenericNetworkLayer like INetworkLayer
     submodules:
         routingTable: GenericRoutingTable {
             parameters:
-                @display("p=100,100;is=s");
+                @display("p=100,80;is=s");
         }
         gnp: GenericNetworkProtocol {
             parameters:
@@ -63,7 +63,7 @@ module GenericNetworkLayer like INetworkLayer
         }
         dp: MessageDispatcher {
             parameters:
-                @display("p=350,200;b=380,5");
+                @display("p=350,200;b=400,5");
         }
 
     connections allowunconnected:

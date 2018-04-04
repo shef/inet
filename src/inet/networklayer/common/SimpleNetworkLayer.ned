@@ -50,7 +50,7 @@ module SimpleNetworkLayer like INetworkLayer
         }
         dp: MessageDispatcher {
             parameters:
-                @display("p=200,200;b=280,5");
+                @display("p=200,200;b=300,5");
         }
 
     connections allowunconnected:
