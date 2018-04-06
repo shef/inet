@@ -60,6 +60,36 @@ MobilityBase::MobilityBase() :
 {
 }
 
+const char *MobilityBase::DirectiveResolver::resolveDirective(char directive)
+{
+    switch (directive) {
+        case 'p':
+            result = mobility->getCurrentPosition().str();
+            break;
+        case 'v':
+            result = mobility->getCurrentSpeed().str();
+            break;
+//        case 's':
+//            result = mobility->str();
+//            break;
+        default:
+            throw cRuntimeError("Unknown directive: %c", directive);
+    }
+    return result.c_str();
+}
+
+const char* MobilityBase::getDisplayStringText(IMobility *mobility) const
+{
+    DirectiveResolver directiveResolver(mobility);
+    return format.formatString(&directiveResolver);
+}
+
+void MobilityBase::refreshDisplayStringText()
+{
+    cDisplayString& dispStr = this->getDisplayString();
+    dispStr.setTagArg("t", 0, getDisplayStringText(this));
+}
+
 void MobilityBase::initialize(int stage)
 {
     cSimpleModule::initialize(stage);
@@ -71,6 +101,7 @@ void MobilityBase::initialize(int stage)
         constraintAreaMax.x = par("constraintAreaMaxX");
         constraintAreaMax.y = par("constraintAreaMaxY");
         constraintAreaMax.z = par("constraintAreaMaxZ");
+        format.parseFormat(par("displayStringTextFormat"));
         bool visualizeMobility = par("visualizeMobility");
         if (visualizeMobility) {
             visualRepresentation = findVisualRepresentation();
@@ -88,6 +119,7 @@ void MobilityBase::initialize(int stage)
         initializeOrientation();
         initializePosition();
     }
+    refreshDisplayStringText();
 }
 
 void MobilityBase::initializePosition()
@@ -129,6 +161,11 @@ void MobilityBase::setInitialPosition()
     }
     if (!filled)
         lastPosition = getRandomPosition();
+}
+
+std::string MobilityBase::getLastPosition()
+{
+    return lastPosition.str();
 }
 
 void MobilityBase::checkPosition()
