@@ -1,15 +1,120 @@
 \chapter{Other Network Protocols}
 \label{cha:other-network-protocols}
 
-TODO: 
+TODO how to choose addressing scheme?  every addressing scheme works with every protocol?  
 
-PIM
+Ipv4NetworkLayer
+Ipv6NetworkLayer
+WiseRouteNetworkLayer = WiseRoute + GenericArp
 
-Flood, ProbabilisticBroadcast, WiseRoute
+SimpleNetworkLayer like INetworkLayer
 
-InternetCloud
+contains:
+  np: <networkProtocolType> like INetworkProtocol,
+  echo: EchoProtocol
 
-GNP
+generic: <networkLayerType> like INetworkLayer if networkLayerType != ""
+
+set:
+
+**.hasIpv4 = false
+**.hasIpv6 = false
+**.hasGn = true  <================= unused in NetworkLayerNodeBase, but referenced in TransportLayerNodeBase
+**.networkLayerType = ``WiseRouteNetworkLayer''
+
+see networklayer.ini
+
+**.networkConfiguratorType = "Ipv4NetworkConfigurator"   ???
+
+\section{GenericArp, GlobalArp}
+
+TODO
+
+\section{Flood}
+
+\nedtype{Flood} is a simple flooding protocol for network-level broadcast.
+It remembers already broadcasted messages, and does not rebroadcast 
+them if it gets another copy of that message.
+
+TODO like INetworkProtocol
+
+\section{ProbabilisticBroadcast}
+
+\nedtype{ProbabilisticBroadcast} is a multi-hop ad-hoc data dissemination 
+protocol based on probabilistic broadcast.
+
+This method reduces the number of packets sent on the channel (reducing the
+broadcast storm problem) at the risk of some nodes not receiving the data.
+It is particularly interesting for mobile networks.
+
+The transmission probability for each attempt, the time between two transmission
+attempts, the maximum number of broadcast transmissions of a packet, and
+some other settings are parameters.
+
+TODO like INetworkProtocol
+
+\nedtype{AdaptiveProbabilisticBroadcast} is a version that automatically 
+adapts transmission probabilities depending on the estimated number of 
+neighbours.
+
+\section{WiseRoute}
+
+\nedtype{Wiseroute} is a simple loop-free routing algorithm that
+builds a routing tree from a central network point, designed
+for sensor networks and convergecast traffic.
+
+The sink (the device at the center of the network) broadcasts
+a route building message. Each network node that receives it
+selects the sink as parent in the routing tree, and rebroadcasts
+the route building message. This procedure maximizes the probability
+that all network nodes can join the network, and avoids loops.
+Parameter sinkAddress gives the sink network address,
+rssiThreshold is a threshold to avoid using bad links (with too low
+RSSI values) for routing, and routeFloodsInterval should be set to
+zero for all nodes except the sink. Each routeFloodsInterval, the
+sink restarts the tree building procedure. Set it to a large value
+if you do not want the tree to be rebuilt.
+
+TODO like INetworkProtocol
+
+WiseRouteNetworkLayer
+
+\section{GenericNetworkProtocol}
+
+This module is a simplified generic network protocol that routes
+generic datagrams using different kind of network addresses. 
+
+TODO GenericNetworkLayer like INetworkLayer  is a compound module
+
+routingTable: GenericRoutingTable,
+gnp: GenericNetworkProtocol,
+echo: EchoProtocol,
+arp: GenericArp
+
+
+\section{/////////////////////////////////////////////////////////}
+
+
+\section{InternetCloud}
+
+This module is an IPv4 router that can delay or drop packets (while retaining
+their order) based on which interface card the packet arrived on and 
+on which interface It is leaving the cloud. The delayer module is replacable.
+
+By default the delayer module is ~MatrixCloudDelayer which lets you configure
+the delay, drop and datarate parameters in an XML file. Packet flows, as defined
+by incoming and outgoing interface pairs, are independent of each other.
+
+The ~InternetCloud module can be used only to model the delay between two hops, but
+it is possible to build more complex networks using several ~InternetCloud modules.
+
+\section{PIM}
+
+Protocol Independent Multicast -- not a network protocol 
+
+models: \nedtype{PimSm}, \nedtype{PimDm}; \nedtype{Pim} is a compound module
+
+
 
 %%% Local Variables:
 %%% mode: latex
