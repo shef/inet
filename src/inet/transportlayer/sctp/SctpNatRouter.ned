@@ -30,13 +30,13 @@ module SCTPNatRouter extends StandardHost
         forwarding = true;
         natHook.networkProtocolModule = default(absPath(".ipv4.ip"));
         natHook.natTableModule = default(absPath(".natTable"));
-        submodules:
+    submodules:
         natHook: SCTPNatHook {
             parameters:
-                @display( "p=160,132;i=block/table");
+                @display("p=175,640;i=block/table;is=s");
         }
         natTable: SCTPNatTable {
             parameters:
-                @display( "p=60,132;i=block/table");
+                @display("p=75,640;i=block/table;is=s");
         }
 }
