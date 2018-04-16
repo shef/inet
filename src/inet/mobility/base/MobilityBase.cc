@@ -119,7 +119,8 @@ void MobilityBase::initialize(int stage)
         initializeOrientation();
         initializePosition();
     }
-    refreshDisplayStringText();
+    else if (stage == INITSTAGE_LAST)
+        refreshDisplayStringText();
 }
 
 void MobilityBase::initializePosition()
