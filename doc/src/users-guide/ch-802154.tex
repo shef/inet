@@ -5,7 +5,87 @@
 
 \section{Overview}
 
+IEEE 802.15.4 is a technical standard which defines the operation of low-rate
+wireless personal area networks (LR-WPANs). It specifies the physical layer and
+media access control for LR-WPANs. It is the basis for the ZigBee, ISA100.11a,
+WirelessHART, MiWi, SNAP, and the Thread specifications, each of which further
+extends the standard by developing the upper layers which are not defined in
+IEEE 802.15.4. Alternatively, it can be used with 6LoWPAN, the technology used
+to deliver IPv6 over WPANs, to define the upper layers. (Thread is also
+6LoWPAN-based.)
+
+% https://en.wikipedia.org/wiki/IEEE_802.15.4
+
+\begin{note}
+
+802.15.4 can use narrowband radio (on one of three possible unlicensed frequency
+bands), using DSSS or alternatively, a combination of binary keying and amplitude 
+shift keying.
+
+In August 2007, IEEE 802.15.4a was released, adding two more PHYs: Direct
+Sequence ultra-wideband (UWB), and another one using chirp spread spectrum
+(CSS).
+
+In April, 2009 IEEE 802.15.4c and IEEE 802.15.4d were released expanding the
+available PHYs with several additional PHYs: one for 780 MHz band using O-QPSK
+or MPSK, another for 950 MHz using GFSK or BPSK.
+
+
+MAC: Important features include real-time suitability by reservation of
+guaranteed time slots, collision avoidance through CSMA/CA and integrated
+support for secure communications. Devices also include power management
+functions such as link quality and energy detection.
+
+\end{note}
+
+The INET Framework contains a basic implementation of IEEE 802.15.4 protocol.
+
+Radios OK; 
+
+MAC: \tbf{OK}: collision avoidance through CSMA/CA; \tbf{missing}: reservation
+of guaranteed time slots, and integrated support for secure communications.
+Devices also include power management functions such as link quality and energy
+detection.
+
+
+To create a wireless node with a 802.15.4 interface, use a node type 
+that has a wireless interface, and set the interface type to the 
+appropriate type. For example, \nedtype{WirelessHost} is a node type 
+which is preconfigured to have one wireless interface, \ttt{wlan[0]}.
+\ttt{wlan[0]} is of parametric type, so if you build the network from
+\nedtype{WirelessHost} nodes, you can configure all of them to use
+802.15.4 with the following line in the ini file:
+
+\begin{inifile}
+**.wlan[0].typename = "Ieee802154NarrowbandInterface"
+\end{inifile}
+
+
+The suitabity of UWB-IR (Ultra-Wide Band Impulse Radio) radios has been shown
+for many different applications, including sensor networks, ad-hoc networks,
+cognitive radio, home networking, etc.
+
+NED types:
+
+Ieee802154Mac
+Ieee802154NarrowbandMac
+Ieee802154UwbIrMac -- missing?
+
+Ieee802154NarrowbandScalarRadio
+Ieee802154NarrowbandDimensionalRadio
+Ieee802154UwbIrRadio
+
+Ieee802154NarrowbandInterface
+Ieee802154UwbIrInterface
+
+Ieee802154UwbIrRadioMedium
+Ieee802154NarrowbandRadioMedium -- missing?
+
+
 TODO
+
+Ieee802154Mac: ``Generic CSMA protocol supporting Mac-ACKs as well as
+constant, linear or exponential backoff times.''
 
 \fi
 
