@@ -6,13 +6,16 @@
 \section{Overview}
 
 IEEE 802.15.4 is a technical standard which defines the operation of low-rate
-wireless personal area networks (LR-WPANs). It specifies the physical layer and
-media access control for LR-WPANs. It is the basis for the ZigBee, ISA100.11a,
-WirelessHART, MiWi, SNAP, and the Thread specifications, each of which further
-extends the standard by developing the upper layers which are not defined in
-IEEE 802.15.4. Alternatively, it can be used with 6LoWPAN, the technology used
-to deliver IPv6 over WPANs, to define the upper layers. (Thread is also
-6LoWPAN-based.)
+wireless personal area networks (LR-WPANs). IEEE 802.15.4 was designed for data
+rates of 250 kbit/s or lower, in order to achieve long battery life (months or
+even years) and very low complexity. The standard specifies the physical layer
+and media access control.
+
+IEEE 802.15.4is the basis for the ZigBee, ISA100.11a, WirelessHART, MiWi, SNAP,
+and the Thread specifications, each of which further extends the standard by
+developing the upper layers which are not defined in IEEE 802.15.4.
+Alternatively, it can be used with 6LoWPAN, the technology used to deliver IPv6
+over WPANs, to define the upper layers. (Thread is also 6LoWPAN-based.)
 
 % https://en.wikipedia.org/wiki/IEEE_802.15.4
 
@@ -40,12 +43,23 @@ functions such as link quality and energy detection.
 
 The INET Framework contains a basic implementation of IEEE 802.15.4 protocol.
 
-Radios OK; 
+TODO which PHYs are supported; the exact parameterization (modes?) is missing
+
+TODO which MAC features are supported:
 
 MAC: \tbf{OK}: collision avoidance through CSMA/CA; \tbf{missing}: reservation
 of guaranteed time slots, and integrated support for secure communications.
 Devices also include power management functions such as link quality and energy
 detection.
+
+\section{Network Interfaces}
+
+There are two network interfaces that differ in the type of radio:
+
+\begin{itemize}
+  \item \nedtype{Ieee802154NarrowbandInterface} -- TODO
+  \item \nedtype{Ieee802154UwbIrInterface} -- TODO
+\end{itemize}
 
 
 To create a wireless node with a 802.15.4 interface, use a node type 
@@ -60,32 +74,25 @@ which is preconfigured to have one wireless interface, \ttt{wlan[0]}.
 **.wlan[0].typename = "Ieee802154NarrowbandInterface"
 \end{inifile}
 
+Corresponding mediums:
 
-The suitabity of UWB-IR (Ultra-Wide Band Impulse Radio) radios has been shown
-for many different applications, including sensor networks, ad-hoc networks,
-cognitive radio, home networking, etc.
+Ieee802154UwbIrRadioMedium
+Ieee802154NarrowbandRadioMedium -- missing?
 
-NED types:
+\section{MAC Protocol}
+
+Ieee802154Mac: ``Generic CSMA protocol supporting Mac-ACKs as well as
+constant, linear or exponential backoff times.''
 
 Ieee802154Mac
 Ieee802154NarrowbandMac
 Ieee802154UwbIrMac -- missing?
 
+\section{Physical Layer}
+
 Ieee802154NarrowbandScalarRadio
 Ieee802154NarrowbandDimensionalRadio
 Ieee802154UwbIrRadio
-
-Ieee802154NarrowbandInterface
-Ieee802154UwbIrInterface
-
-Ieee802154UwbIrRadioMedium
-Ieee802154NarrowbandRadioMedium -- missing?
-
-
-TODO
-
-Ieee802154Mac: ``Generic CSMA protocol supporting Mac-ACKs as well as
-constant, linear or exponential backoff times.''
 
 \fi
 
