@@ -4,9 +4,9 @@
 \section{Overview}
 
 INET Framework has models for several internet routing protocols, including
-RIP, OSPF and BGP. 
+RIP, OSPF and BGP.
 
-The easiest way to add routing to a network is to use the \nedtype{Router} 
+The easiest way to add routing to a network is to use the \nedtype{Router}
 NED type for routers. \nedtype{Router} contains a conditional instance
 for each of the above protocols. These submodules can be enabled by
 setting the \ttt{hasRIP}, \ttt{hasOSPF} and/or \ttt{hasBGP} parameters to
@@ -27,22 +27,69 @@ routing protocol enabled.
 
 RIP (Routing Information Protocol) is a distance-vector routing protocol
 which employs the hop count as a routing metric. RIP prevents routing loops
-by implementing a limit on the number of hops allowed in a path from source 
+by implementing a limit on the number of hops allowed in a path from source
 to destination.
 
 The \nedtype{Rip} module implements distance vector routing as
-specified in RFC 2453 (RIPv2) and RFC 2080 (RIPng). Per-interface
-configuration can be specified in an XML file.
+specified in RFC 2453 (RIPv2) and RFC 2080 (RIPng). Configuration
+can be specified in an XML file that can be specified in the
+\ttt{ripConfig} parameter.
 
-\nedtype{RipRouter} is a \nedtype{Router} with the RIP protocol enabled.
+The configuration file specifies the per interface parameters.
+Each \ttt{<interface>} element configures one or more interfaces;
+the \ttt{hosts}, \ttt{names}, \ttt{towards}, \ttt{among} attributes
+select the configured interfaces (in a similar way as with
+\nedtype{Ipv4NetworkConfigurator} \ref{cha:network-autoconfiguration}).
 
+Additional attributes:
+\begin{itemize}
+  \item \ttt{metric}: metric assigned to the link, default value is 1.
+        This value is added to the metric of a learned route,
+        received on this interface. It must be an integer in
+        the [1,15] interval.
+  \item \ttt{mode}: mode of the interface.
+\end{itemize}
+
+The mode attribute can be one of the following:
+\begin{itemize}
+  \item \ttt{'NoRIP'}: no RIP messages are sent or received on this interface.
+  \item \ttt{'NoSplitHorizon'}: no split horizon filtering; send all routes to
+        neighbors.
+  \item \ttt{'SplitHorizon'}: do not sent routes whose next hop is the neighbor.
+  \item \ttt{'SplitHorizonPoisenedReverse'} (default): if the next hop is the neighbor, then
+  set the metric of the route to infinity.
+\end{itemize}
+
+The following example sets the link metric between router
+\ttt{R1} and \ttt{RB} to 2, while all other links will have a metric of 1.
+\begin{verbatim}
+<RIPConfig>
+  <interface among="R1 RB" metric="2"/>
+  <interface among="R? R?" metric="1"/>
+</RIPConfig>
+\end{verbatim}
+
+The \nedtype{Rip} module has the following parameters:
+\begin{itemize}
+  \item \ttt{mode}: either "RIPv2" (RFC 2453) or "RIPng" (RFC 2080)
+  \item \ttt{routingTableModule}: path to the routing table module
+        e.g. \ttt{'\^{}.ipv4.routingTable'}
+  \item \ttt{ripConfig}: an XML configuration file containing per-interface parameters
+\end{itemize}
+
+The following example configures a \nedtype{Router} module to use RIPv2:
+\begin{verbatim}
+    **.hasRIP = true
+    **.mode = "RIPv2"
+    **.ripConfig = xmldoc("RIPConfig.xml")
+\end{verbatim}
 
 \section{OSPF}
 \label{sec:ospf}
 
-OSPF (Open Shortest Path First) is a routing protocol for IP networks. 
-It uses a link state routing (LSR) algorithm and falls into the group 
-of interior gateway protocols (IGPs), operating within a single 
+OSPF (Open Shortest Path First) is a routing protocol for IP networks.
+It uses a link state routing (LSR) algorithm and falls into the group
+of interior gateway protocols (IGPs), operating within a single
 autonomous system (AS).
 
 The \nedtype{Ospf} module implements the OSPF Version 2. Areas and routers
@@ -55,10 +102,10 @@ can be configured using an XML file.
 \label{sec:bgp}
 
 BGP (Border Gateway Protocol) is a standardized exterior gateway protocol
-designed to exchange routing and reachability information among 
+designed to exchange routing and reachability information among
 autonomous systems (AS) on the Internet.
 
-The \nedtype{Bgp} module implements BGP Version 4. The model implements 
+The \nedtype{Bgp} module implements BGP Version 4. The model implements
 RFC 4271, with some limitations. Autonomous Systems and rules can be
 configured in an XML file.
 
