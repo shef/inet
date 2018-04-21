@@ -44,7 +44,7 @@ LIB is fundamentally a table with the following columns: \textit{input-interface
 
 Upon receiving a labelled packet from another LSR, MPLS first extracts the
 incoming interface and incoming label pair, and then looks it up in local LIB. 
-If matching entry is found, it applies the prescribed label operations, and 
+If a matching entry is found, it applies the prescribed label operations, and 
 forwards the packet to the output interface. 
 
 Label operations can be the following:
@@ -120,8 +120,8 @@ classifier for \nedtype{Mpls}.
 In INET, the \nedtype{Ldp} module takes routing information from \nedtype{Ted}
 module. The \nedtype{Ted} instance in the network is filled and maintained
 by a \nedtype{LinkStateRouting} module. Unfortunately, it is currently not
-possible to use other routing protocol implementations such as \nedtype{Bgp}
-in conjuction with \nedtype{Ldp}. 
+possible to use other routing protocol implementations such as \nedtype{Ospf} 
+or \nedtype{Rip} in conjunction with \nedtype{Ldp}. 
 
 \subsection{Ted}
 
@@ -232,7 +232,7 @@ An example \ttt{fectable.xml} file:
     <fecentry>
         <id>1</id>
         <destination>host5</destination>
-		<source>host1</source>
+        <source>host1</source>
         <tunnel_id>1</tunnel_id>
         <lspid>100</lspid>
     </fecentry>
@@ -245,7 +245,7 @@ INET provides the following pre-assembled MPLS routers:
 
 \begin{itemize}
   \item \nedtype{LdpMplsRouter} is an MPLS router with the LDP signaling protocol
-  \item \nedtype{RsvpMplsRouter} is an MPLS router with the RSVP-T signaling protocol
+  \item \nedtype{RsvpMplsRouter} is an MPLS router with the RSVP-TE signaling protocol
 \end{itemize}
 
 % HINT: A good MPLS primer:
