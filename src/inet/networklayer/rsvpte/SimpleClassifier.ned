@@ -27,7 +27,7 @@ import inet.networklayer.mpls.IIngressClassifier;
 // child elements that effectively serve as attributes:
 // <id>, <destination>, <source>, <label>, <tunnel_id>, <lspid>.
 //
-simple SimpleClassifier like IIngressClassifier
+simple SimpleClassifier like IIngressClassifier //TODO better name! maybe FecClassifier?
 {
     parameters:
         string routingTableModule;

@@ -32,7 +32,7 @@ namespace inet {
  * Known concrete classifier classes are the ~Ldp module class and (via ~IRsvpClassifier)
  * RSVP_TE's SimpleClassifier module class.
  */
-class INET_API IClassifier
+class INET_API IClassifier //TODO rename to IIngressClassifier? put all MPLS code into the "inet::mpls" namespace?
 {
   public:
     virtual ~IClassifier() {}
