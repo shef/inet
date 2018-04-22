@@ -43,7 +43,7 @@ The list of network layer protocols that can be plugged into
 
 \begin{itemize}
   \item \nedtype{Flood} implements flooding
-  \item \nedtype{WiseRoute} implements the Wise Route protocol (TODO which is...?)
+  \item \nedtype{WiseRoute} implements Wise Route, a convergecasting protocol for wireless sensor networks
   \item \nedtype{ProbabilisticBroadcast} TODO
   \item \nedtype{AdaptiveProbabilisticBroadcast} TODO
 \end{itemize}
@@ -51,6 +51,20 @@ The list of network layer protocols that can be plugged into
 In addition to the network layer protocol, \nedtype{SimpleNetworkLayer} 
 also includes an instance of \nedtype{EchoProtocol}, a module type that
 implements a simple \textit{ping}-like protocol.
+
+All the above network protocols can work with IPv4, IPv6 address,
+use MAC address as network address (this is sometimes useful in WSNs),
+or use sythetic addresses that only make sense within the simulation.
+\footnote{Thanks to the \ttt{L3Address} C++ class}
+
+In apps, you need to specify which network layer protocol you want to use.
+For example:
+
+\begin{inifile}
+**.app[*].networkProtocol = "flood"
+\end{inifile}
+
+TODO all apps support that?
 
 TODO inet/hierarchical99/networklayer.ini:
 **.networkConfiguratorType = "Ipv4NetworkConfigurator" --- ???
@@ -90,7 +104,7 @@ probabilities depending on the estimated number of neighbours.
 
 \nedtype{WiseRoute} implements Wise Route, a simple loop-free routing algorithm
 that builds a routing tree from a central network point, designed for sensor
-networks and convergecast traffic.
+networks and convergecast traffic (WIreless SEnsor routing).
 
 The sink (the device at the center of the network) broadcasts
 a route building message. Each network node that receives it
@@ -117,11 +131,20 @@ echo: EchoProtocol,
 arp: GenericArp
 
 
+\section{Address Types}
 
-\section{Addressing Schemes}
+The following address types are available:\footnote{See the \ttt{L3Address} in C++}
 
-TODO how to choose addressing scheme?  every addressing scheme works with every protocol?
-  
+\begin{itemize}
+  \item IPv4 address
+  \item IPv6 address
+  \item MAC address  (TODO explain!)
+  \item module ID
+  \item module path
+\end{itemize}
+
+TODO how to choose address type?  every address type works with every protocol?
+
 \section{Address Resolution}
 
 WiseRouteNetworkLayer = WiseRoute + GenericArp
