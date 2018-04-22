@@ -1,10 +1,36 @@
 \chapter{Other Network Protocols}
 \label{cha:other-network-protocols}
 
+\section{Overview}
+
+Network layer protocols in INET are not restricted to IPv4 and IPv6. INET nodes such as
+\nedtype{Router} and \nedtype{StandardHost} can be configured to use an alternative
+network layer protocols instead of, or in addition to, IPv4 and IPv6.
+
+Node models contain three optional network layers that can be individually
+turned on or off:
+
+\begin{ned}
+ipv4: <ipv4NetworkLayerType> like INetworkLayer if hasIpv4;
+ipv6: <ipv6NetworkLayerType> like INetworkLayer if hasIpv6;
+generic: <networkLayerType> like INetworkLayer if hasGn;
+\end{ned}
+
+In the default configuration, only IPv4 is turned on. If you want to use an
+alternative network layer protocol instead of IPv4/IPv6, your configuration will
+look something like this:
+
+\begin{inifile}
+**.hasIpv4 = false
+**.hasIpv6 = false
+**.hasGn = true  <================= unused in NetworkLayerNodeBase, but referenced in TransportLayerNodeBase
+**.networkLayerType = "WiseRouteNetworkLayer"
+\end{inifile}
+
+
+
 TODO how to choose addressing scheme?  every addressing scheme works with every protocol?  
 
-Ipv4NetworkLayer
-Ipv6NetworkLayer
 WiseRouteNetworkLayer = WiseRoute + GenericArp
 
 SimpleNetworkLayer like INetworkLayer
@@ -23,22 +49,7 @@ see networklayer.ini
 **.networkConfiguratorType = "Ipv4NetworkConfigurator"   ???
 
 
-StandardHost:
 
-\begin{ned}
-ipv4: <ipv4NetworkLayerType> like INetworkLayer if hasIpv4;
-ipv6: <ipv6NetworkLayerType> like INetworkLayer if hasIpv6;
-generic: <networkLayerType> like INetworkLayer if hasGn;
-\end{ned}
-
-So you need to configure:
-
-\begin{inifile}
-**.hasIpv4 = false
-**.hasIpv6 = false
-**.hasGn = true  <================= unused in NetworkLayerNodeBase, but referenced in TransportLayerNodeBase
-**.networkLayerType = "WiseRouteNetworkLayer"
-\end{inifile}
 
 
 \section{GenericArp, GlobalArp}
