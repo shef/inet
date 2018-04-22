@@ -17,14 +17,29 @@ generic: <networkLayerType> like INetworkLayer if networkLayerType != ""
 
 set:
 
-**.hasIpv4 = false
-**.hasIpv6 = false
-**.hasGn = true  <================= unused in NetworkLayerNodeBase, but referenced in TransportLayerNodeBase
-**.networkLayerType = ``WiseRouteNetworkLayer''
 
 see networklayer.ini
 
 **.networkConfiguratorType = "Ipv4NetworkConfigurator"   ???
+
+
+StandardHost:
+
+\begin{ned}
+ipv4: <ipv4NetworkLayerType> like INetworkLayer if hasIpv4;
+ipv6: <ipv6NetworkLayerType> like INetworkLayer if hasIpv6;
+generic: <networkLayerType> like INetworkLayer if hasGn;
+\end{ned}
+
+So you need to configure:
+
+\begin{inifile}
+**.hasIpv4 = false
+**.hasIpv6 = false
+**.hasGn = true  <================= unused in NetworkLayerNodeBase, but referenced in TransportLayerNodeBase
+**.networkLayerType = "WiseRouteNetworkLayer"
+\end{inifile}
+
 
 \section{GenericArp, GlobalArp}
 
