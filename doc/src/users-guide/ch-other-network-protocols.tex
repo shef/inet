@@ -55,19 +55,9 @@ implements a simple \textit{ping}-like protocol.
 TODO possible error in networklayer.ini:
 **.networkConfiguratorType = "Ipv4NetworkConfigurator" --- ???
 
-\section{Addressing Schemes}
+\section{Protocols}
 
-TODO how to choose addressing scheme?  every addressing scheme works with every protocol?
-  
-\section{Address Resolution}
-
-WiseRouteNetworkLayer = WiseRoute + GenericArp
-
-\nedtype{GenericArp}, \nedtype{Arp}, \nedtype{GlobalArp}
-
-TODO
-
-\section{Flood}
+\subsection{Flood}
 
 \nedtype{Flood} is a simple flooding protocol for network-level broadcast.
 It remembers already broadcasted messages, and does not rebroadcast 
@@ -75,7 +65,7 @@ them if it gets another copy of that message.
 
 TODO like INetworkProtocol
 
-\section{ProbabilisticBroadcast}
+\subsection{ProbabilisticBroadcast}
 
 \nedtype{ProbabilisticBroadcast} is a multi-hop ad-hoc data dissemination 
 protocol based on probabilistic broadcast.
@@ -88,17 +78,17 @@ The transmission probability for each attempt, the time between two transmission
 attempts, the maximum number of broadcast transmissions of a packet, and
 some other settings are parameters.
 
-TODO like INetworkProtocol
+\nedtype{AdaptiveProbabilisticBroadcast}
 
-\nedtype{AdaptiveProbabilisticBroadcast} is a version that automatically 
-adapts transmission probabilities depending on the estimated number of 
-neighbours.
+\nedtype{AdaptiveProbabilisticBroadcast} is a variant of
+\nedtype{ProbabilisticBroadcast} that automatically adjusts transmission
+probabilities depending on the estimated number of neighbours.
 
-\section{WiseRoute}
+\subsection{WiseRoute}
 
-\nedtype{Wiseroute} is a simple loop-free routing algorithm that
-builds a routing tree from a central network point, designed
-for sensor networks and convergecast traffic.
+\nedtype{WiseRoute} implements Wise Route, a simple loop-free routing algorithm
+that builds a routing tree from a central network point, designed for sensor
+networks and convergecast traffic.
 
 The sink (the device at the center of the network) broadcasts
 a route building message. Each network node that receives it
@@ -112,11 +102,7 @@ zero for all nodes except the sink. Each routeFloodsInterval, the
 sink restarts the tree building procedure. Set it to a large value
 if you do not want the tree to be rebuilt.
 
-TODO like INetworkProtocol
-
-WiseRouteNetworkLayer
-
-\section{GenericNetworkProtocol}
+\subsection{GenericNetworkProtocol}
 
 This module is a simplified generic network protocol that routes
 generic datagrams using different kind of network addresses. 
@@ -128,6 +114,19 @@ gnp: GenericNetworkProtocol,
 echo: EchoProtocol,
 arp: GenericArp
 
+
+
+\section{Addressing Schemes}
+
+TODO how to choose addressing scheme?  every addressing scheme works with every protocol?
+  
+\section{Address Resolution}
+
+WiseRouteNetworkLayer = WiseRoute + GenericArp
+
+\nedtype{GenericArp}, \nedtype{Arp}, \nedtype{GlobalArp}
+
+TODO
 
 \section{/////////////////////////////////////////////////////////}
 
