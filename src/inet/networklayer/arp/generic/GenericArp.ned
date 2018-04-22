@@ -21,7 +21,11 @@ import inet.networklayer.contract.IArp;
 
 
 //
-// TODO
+// Resolves an L3 address to a MAC address. Currently it supports 
+// three types of addresses: moduleId, modulePath, and MAC address
+// as L3 address. These address types are resolved synchronously, 
+// without any protocol messaging. IPv4 and IPv6 addresses are not
+// supported. (For IPv4 use ~Arp, and for IPv6 use ~Ipv6NeighbourDiscovery.)
 //
 simple GenericArp like IArp
 {
